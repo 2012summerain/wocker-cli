@@ -6,7 +6,7 @@ RED=31
 USER=wocker
 DOCROOT=/var/www/wordpress
 
-image='wocker/wocker:latest'
+image='2012summerain/wocker:latest'
 cname=''
 ports=''
 cid=''
@@ -214,7 +214,7 @@ case "$1" in
 
       # Use existing WordPress files to run a container
       elif [[ $cname && -d ~/data/${cname} ]]; then
-        docker run -d --name $cname -p 80:80 -p 3306:3306 -v ~/data/${cname}:${DOCROOT}:rw $image
+        docker run -d --name $cname -p 80:80 -p 2222:22 -p 3306:3306 -v ~/data/${cname}:${DOCROOT}:rw $image
 
       # Or copy WordPress files from the image to run a container
       else
@@ -232,7 +232,7 @@ case "$1" in
         cname=$dirname && \
         docker cp $(docker ps -l -q):${DOCROOT} ~/data/${dirname} && \
         docker rm -f $(docker ps -l -q) && \
-        docker run -d --name $cname -p 80:80 -p 3306:3306 -v ~/data/${dirname}:${DOCROOT}:rw $image
+        docker run -d --name $cname -p 80:80 -p 2222:22 -p 3306:3306 -v ~/data/${dirname}:${DOCROOT}:rw $image
       fi
 
     fi
